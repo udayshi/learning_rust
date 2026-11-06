@@ -1,0 +1,3 @@
+Welcome File reading test.
+Next test
+Welcome again

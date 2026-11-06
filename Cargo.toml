@@ -1,9 +1,10 @@
 [package]
-name = "hello_cargo"
+name = "rust_practise"
 version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+rusqlite = { version = "0.41", features = ["bundled"] }
 
 [lints.rust]
 dead_code = "allow"
