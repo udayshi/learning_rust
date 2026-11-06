@@ -60,6 +60,18 @@ explicit.
 Define a nested `profile` module and use its public `User` type. The module exposes a constructor while keeping the
 module boundary clear. This introduces how `pub` controls access to items in another module.
 
+### [The `use` keyword](src/demo/use_keyword.rs)
+
+Import the `connect` function from a nested `network` module with `use network::connect`. The example then calls
+`connect` directly instead of writing the full module path. This shows how `use` can make code that uses external
+items easier to read.
+
+### [External modules](src/demo/external_mod.rs)
+
+Run code that is stored in its own Rust source file and included by the parent `demo` module. The example prints a
+message and a small user profile from `external_mod.rs`. This shows how a larger program can organize behavior across
+separate module files.
+
 ## Prerequisites
 
 Install Rust and Cargo through [rustup](https://rustup.rs/). Cargo builds, runs, and checks this project, so both
