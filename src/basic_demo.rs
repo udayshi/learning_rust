@@ -1,26 +1,32 @@
 pub mod basic_dt;
 
+mod cli_args;
 mod control_flow;
+mod control_tests;
 mod enums;
 mod external_mod;
 mod functions;
 mod generics;
 mod hash_maps;
+mod iterators_io_run;
 mod lifetimes;
 mod methods;
 mod modules;
 mod ownership;
 mod panic;
+mod read_file;
+mod refactor_io;
 mod references;
 mod result;
 mod strings;
 mod structs;
+mod tests;
 mod traits;
 mod use_keyword;
 mod variables;
 mod vectors;
 pub fn run() {
-    //basic_dt::run();
+    basic_dt::run();
     //variables::run();
     //variables::run();
     //control_flow::run();
@@ -38,5 +44,9 @@ pub fn run() {
     //result::run();
     // generics::run();
     //traits::run();
-    lifetimes::run();
+    //lifetimes::run();
+    //cli_args::run();
+    //read_file::run("info.txt")
+    //refactor_io::run();
+    //iterators_io_run::run();
 }

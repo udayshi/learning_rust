@@ -1,4 +1,4 @@
-mod demo;
+mod basic_demo;
 
 fn main() {
     println!("--- Running Demo ---");
@@ -7,5 +7,5 @@ fn main() {
     //demo::basic_dt::run();
 
     //calling module directly with private method
-    demo::run();
+    basic_demo::run();
 }
