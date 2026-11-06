@@ -105,6 +105,18 @@ Define a `Profile<T>` struct whose identifier can use different types. The examp
 integer identifier and another with a string identifier. This shows how a generic type parameter allows one data
 model to work with multiple kinds of values.
 
+### [Traits](src/demo/traits.rs)
+
+Define a `Summary` trait that requires a `summarize` method. The `User` struct implements that trait by formatting
+its username and email address into a description. This shows how traits describe shared behavior that types can
+choose to provide.
+
+### [Lifetimes](src/demo/lifetimes.rs)
+
+Compare two string slices and return the longest one with a named lifetime parameter. The `'a` annotation tells Rust
+that the returned reference cannot live longer than either input reference. This introduces how lifetimes protect
+references from outliving the data they point to.
+
 ## Prerequisites
 
 Install Rust and Cargo through [rustup](https://rustup.rs/). Cargo builds, runs, and checks this project, so both

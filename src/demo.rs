@@ -6,6 +6,7 @@ mod external_mod;
 mod functions;
 mod generics;
 mod hash_maps;
+mod lifetimes;
 mod methods;
 mod modules;
 mod ownership;
@@ -14,6 +15,7 @@ mod references;
 mod result;
 mod strings;
 mod structs;
+mod traits;
 mod use_keyword;
 mod variables;
 mod vectors;
@@ -34,5 +36,7 @@ pub fn run() {
     //hash_maps::run();
     //panic::run();
     //result::run();
-    generics::run();
+    // generics::run();
+    //traits::run();
+    lifetimes::run();
 }
