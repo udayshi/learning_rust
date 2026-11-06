@@ -33,6 +33,18 @@ Learn safe immutable and mutable access without transferring ownership.
 
 Use custom data types to group related fields.
 
+### [Methods](src/demo/methods.rs)
+
+Create an `Account` with an associated function and display it through an instance method.
+
+### [Enums](src/demo/enums.rs)
+
+Represent user roles with an enum and select behavior using `match`.
+
+### [Modules](src/demo/modules.rs)
+
+Define a nested `profile` module and use its public `User` type.
+
 ## Prerequisites
 
 Install Rust and Cargo through [rustup](https://rustup.rs/), then confirm the installation:
@@ -47,7 +59,8 @@ cargo --version
 cargo run
 ```
 
-Individual learning examples can be enabled from `src/demo.rs`.
+The [demo selector](src/demo.rs) controls which example runs. Uncomment one `run()` call and comment out the
+current call before using `cargo run`.
 
 ## Check the code
 

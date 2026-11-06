@@ -1,7 +1,10 @@
 pub mod basic_dt;
 
 mod control_flow;
+mod enums;
 mod functions;
+mod methods;
+mod modules;
 mod ownership;
 mod references;
 mod structs;
@@ -12,5 +15,8 @@ pub fn run() {
     //variables::run();
     //control_flow::run();
     //ownership::run();
-    structs::run();
+    //structs::run();
+    //methods::run();
+    //enums::run();
+    modules::run();
 }
