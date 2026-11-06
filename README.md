@@ -72,6 +72,39 @@ Run code that is stored in its own Rust source file and included by the parent `
 message and a small user profile from `external_mod.rs`. This shows how a larger program can organize behavior across
 separate module files.
 
+### [Vectors](src/demo/vectors.rs)
+
+Create a mutable vector of scores and add values with `push`. The example reads the first value with indexing and
+uses `get` to safely handle an index that does not exist. This introduces `Vec<T>` and the `Option` returned by safe
+lookups.
+
+### [Strings](src/demo/strings.rs)
+
+Build an owned `String` by appending text and a character. The `format!` macro then combines the name and email into
+a separate value without taking ownership of either input. This shows common ways to create and combine text in Rust.
+
+### [Hash maps](src/demo/hash_maps.rs)
+
+Create a `HashMap` that associates user details with scores. The example inserts key value pairs and retrieves one
+value with `get` inside a `match` expression. This demonstrates how hash map lookups safely return an `Option`.
+
+### [Panics](src/demo/panic.rs)
+
+See how `panic!` immediately stops a program when it reaches an unrecoverable problem. This example intentionally
+panics after printing a user profile message. Do not select this demo if you want `cargo run` to finish normally.
+
+### [Results and file errors](src/demo/result.rs)
+
+Try to open `hello.txt` and handle the returned `Result` with `match`. The example distinguishes a missing file from
+other I O errors before it panics with an explanatory message. It introduces the structure of recoverable error
+handling, although the current missing-file branch still ends the program deliberately.
+
+### [Generics](src/demo/generics.rs)
+
+Define a `Profile<T>` struct whose identifier can use different types. The example creates one profile with an
+integer identifier and another with a string identifier. This shows how a generic type parameter allows one data
+model to work with multiple kinds of values.
+
 ## Prerequisites
 
 Install Rust and Cargo through [rustup](https://rustup.rs/). Cargo builds, runs, and checks this project, so both

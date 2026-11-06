@@ -1,5 +1,3 @@
-// src/demo/basic_dt.rs
-
 pub fn run() {
     // Integers & Floats
     let age: u32 = 25;

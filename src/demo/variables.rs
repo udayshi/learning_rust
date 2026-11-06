@@ -1,5 +1,3 @@
-// src/demo/variables.rs
-
 pub fn run() {
     // Immutable by default
     let name = "Uday Shiwakoti";

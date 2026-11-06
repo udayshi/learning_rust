@@ -1,5 +1,3 @@
-// src/demo/methods.rs
-
 #[derive(Debug)]
 struct Account {
     username: String,

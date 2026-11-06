@@ -1,5 +1,3 @@
-// src/demo.rs
-
 pub fn run() {
     // s1 owns the String data allocated on the heap
     let s1 = String::from("uday@uday.com.np");

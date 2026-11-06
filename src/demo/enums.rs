@@ -1,5 +1,3 @@
-// src/demo/enums.rs
-
 #[derive(Debug)]
 enum UserRole {
     Admin,

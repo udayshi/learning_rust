@@ -1,5 +1,3 @@
-// src/demo/references.rs
-
 pub fn run() {
     let email = String::from("uday@uday.com.np");
 

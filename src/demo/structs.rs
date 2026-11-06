@@ -1,5 +1,3 @@
-// src/demo/structs.rs
-
 struct UserProfile {
     username: String,
     email: String,

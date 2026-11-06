@@ -1,5 +1,3 @@
-// src/demo/control_flow.rs
-
 pub fn run() {
     let name = "Uday Shiwakoti";
     let score = 85;

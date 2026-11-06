@@ -1,5 +1,3 @@
-// src/demo/modules.rs
-
 mod profile {
     pub struct User {
         pub name: String,
