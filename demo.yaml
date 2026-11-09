@@ -1,0 +1,8 @@
+name: "Uday Shiwakoti"
+email: "uday@uday.com.np"
+settings:
+  theme: "dark"
+  timeout_seconds: 30
+  features_enabled:
+    - encryption
+    - sqlite

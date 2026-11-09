@@ -25,8 +25,8 @@ cargo --version
 
 ## Run the active example
 
-The active program is selected in [`src/main.rs`](src/main.rs). It currently runs the secure CLI store from
-[`src/basic_utils/cli_secure_store.rs`](src/basic_utils/cli_secure_store.rs):
+The active program is selected in [`src/main.rs`](src/main.rs). It currently fetches posts 1 through 10 concurrently
+from JSONPlaceholder and prints each post ID and title in ID order:
 
 ```bash
 cargo run
@@ -38,9 +38,22 @@ To run another example, enable exactly one call in either [`src/basic_utils.rs`]
 Some examples require arguments, write local files, contact a local service, or deliberately stop the program; see
 the notes below before enabling them.
 
+### Concurrent post fetcher
+
+The active example requires internet access to `jsonplaceholder.typicode.com`. It starts all ten requests at once,
+waits for them to complete, then prints the fetched posts in numeric order:
+
+```text
+- Post ID 1: <title>
+...
+- Post ID 10: <title>
+```
+
+If a request fails, the application exits with the HTTP error instead of reporting an incomplete fetch as successful.
+
 ### Secure CLI store
 
-The active secure store accepts the following commands:
+After enabling `cli_secure_store::run()` in `src/basic_utils.rs`, the secure CLI store accepts the following commands:
 
 ```text
 add       # prompts for a key and a value, then encrypts and saves it
@@ -108,7 +121,8 @@ Select a utility in [`src/basic_utils.rs`](src/basic_utils.rs).
 
 | Example | Description |
 | --- | --- |
-| [`cli_secure_store.rs`](src/basic_utils/cli_secure_store.rs) | Interactive AES-256-GCM-encrypted key-value store backed by SQLite. The active example. |
+| [`concurrent_fetch.rs`](src/basic_utils/concurrent_fetch.rs) | Fetches JSONPlaceholder posts 1 through 10 concurrently and prints each ID and title. The active example. |
+| [`cli_secure_store.rs`](src/basic_utils/cli_secure_store.rs) | Interactive AES-256-GCM-encrypted key-value store backed by SQLite. |
 | [`sqlite_crud.rs`](src/basic_utils/sqlite_crud.rs) | Create, read, update, and delete records in an in-memory SQLite database. |
 | [`system_command.rs`](src/basic_utils/system_command.rs) | Runs `df -h /` and prints available disk-space information on Unix-like systems. |
 | [`interactive_writer.rs`](src/basic_utils/interactive_writer.rs) | Appends typed lines to `uday_interactive_log.txt` until `exit` is entered. |
@@ -120,6 +134,7 @@ Select a utility in [`src/basic_utils.rs`](src/basic_utils.rs).
 - `interactive_writer` and `file_read_write` create or append to local log files. These files are intentionally
   retained between runs.
 - `system_command` requires the Unix `df` command and is not portable to Windows without changing the command.
+- `concurrent_fetch` requires internet access to JSONPlaceholder.
 - `chatbot_ollama` requires [Ollama](https://ollama.com/) to be installed, the server to be running, and the model
   to be available locally:
 

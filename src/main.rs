@@ -1,7 +1,9 @@
 mod basic_demo;
 mod basic_utils;
 
-fn main() {
+/// Starts the currently selected learning example.
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("--- Running Demo ---");
 
     // 2. Call through the module path into the submodule function
@@ -9,5 +11,5 @@ fn main() {
 
     //calling module directly with private method
     // basic_demo::run();
-    basic_utils::run();
+    basic_utils::run().await
 }
