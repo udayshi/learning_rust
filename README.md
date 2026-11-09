@@ -25,8 +25,8 @@ cargo --version
 
 ## Run the active example
 
-The active program is selected in [`src/main.rs`](src/main.rs). It currently fetches posts 1 through 10 concurrently
-from JSONPlaceholder and prints each post ID and title in ID order:
+The active program is selected in [`src/main.rs`](src/main.rs). It currently runs the local HTTP server from
+[`src/basic_utils/http_server.rs`](src/basic_utils/http_server.rs):
 
 ```bash
 cargo run
@@ -38,18 +38,25 @@ To run another example, enable exactly one call in either [`src/basic_utils.rs`]
 Some examples require arguments, write local files, contact a local service, or deliberately stop the program; see
 the notes below before enabling them.
 
-### Concurrent post fetcher
+### HTTP server
 
-The active example requires internet access to `jsonplaceholder.typicode.com`. It starts all ten requests at once,
-waits for them to complete, then prints the fetched posts in numeric order:
+The server listens on port 80 and returns the caller's IP address and local access time in `YYYY-MM-DD HH:MM:SS`
+format. After starting the server, make a request from another terminal:
 
-```text
-- Post ID 1: <title>
-...
-- Post ID 10: <title>
+```bash
+curl -i http://127.0.0.1:80
 ```
 
-If a request fails, the application exits with the HTTP error instead of reporting an incomplete fetch as successful.
+The response body has this form:
+
+```text
+ok
+client_ip: 127.0.0.1
+access_time: 2026-11-09 14:30:45
+```
+
+It also writes a request and response entry to standard output, each with the client IP and access time. On systems
+that restrict port 80, change the bind address in `http_server.rs` to a port above 1024, such as `0.0.0.0:8080`.
 
 ### Secure CLI store
 
@@ -127,6 +134,7 @@ Select a utility in [`src/basic_utils.rs`](src/basic_utils.rs).
 | [`system_command.rs`](src/basic_utils/system_command.rs) | Runs `df -h /` and prints available disk-space information on Unix-like systems. |
 | [`interactive_writer.rs`](src/basic_utils/interactive_writer.rs) | Appends typed lines to `uday_interactive_log.txt` until `exit` is entered. |
 | [`file_read_write.rs`](src/basic_utils/file_read_write.rs) | Appends an audit entry to `uday_audit_log.txt`, then reads and prints it. |
+| [`http_server.rs`](src/basic_utils/http_server.rs) | Minimal HTTP server that returns and logs the client IP and local access time (`YYYY-MM-DD HH:MM:SS`) for each request. The active example. |
 | [`chatbot_ollama.rs`](src/basic_utils/chatbot_ollama.rs) | Sends prompts to a local Ollama `gemma3:4b` model over its HTTP API. |
 
 ### Utility-specific setup and effects
@@ -135,6 +143,8 @@ Select a utility in [`src/basic_utils.rs`](src/basic_utils.rs).
   retained between runs.
 - `system_command` requires the Unix `df` command and is not portable to Windows without changing the command.
 - `concurrent_fetch` requires internet access to JSONPlaceholder.
+- `http_server` listens on port 80. On systems that restrict privileged ports, change its bind address to a port above
+  1024 (for example, `0.0.0.0:8080`) before running it outside Docker.
 - `chatbot_ollama` requires [Ollama](https://ollama.com/) to be installed, the server to be running, and the model
   to be available locally:
 
@@ -221,6 +231,21 @@ environment directly. A successful cross-build writes the executable to:
 ```text
 target/x86_64-unknown-linux-gnu/release/rust_practise
 ```
+
+## Build with Docker
+
+Build the application for your Docker host architecture and run it with:
+
+```bash
+docker build --tag rust-practise:local .
+docker run --rm rust-practise:local
+```
+
+The Dockerfile compiles dependencies in a separate cached layer. After the first build, changes limited to `src/`
+reuse that layer, so repeat builds avoid recompiling Cargo dependencies. Changes to `Cargo.toml` or `Cargo.lock`
+correctly invalidate the dependency cache.
+
+The image uses Rust 1.89 because the resolved dependencies require Rust 1.89 or later.
 
 ## Adding a lesson
 
