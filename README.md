@@ -23,18 +23,38 @@ cargo --version
 | [`tests/integration_test.rs`](tests/integration_test.rs) | Integration-test example. |
 | [`info.txt`](info.txt) | Sample text input for file-reading and search examples. |
 
-## Run the current lesson
+## Run the active example
 
-The active program is selected in [`src/main.rs`](src/main.rs). It currently runs the in-memory SQLite CRUD example
-from [`src/basic_utils/sqlite_crud.rs`](src/basic_utils/sqlite_crud.rs):
+The active program is selected in [`src/main.rs`](src/main.rs). It currently runs the secure CLI store from
+[`src/basic_utils/cli_secure_store.rs`](src/basic_utils/cli_secure_store.rs):
 
 ```bash
 cargo run
 ```
 
-To run a learning lesson instead, change `main.rs` to call `basic_demo::run()`. Then uncomment its `run()` call in
-`basic_demo::run()` and comment out the current one. Keep one active call at a time so the output stays focused.
-Some lessons require arguments or deliberately stop the program; see the notes below before enabling them.
+To run another example, enable exactly one call in either [`src/basic_utils.rs`](src/basic_utils.rs) or
+[`src/basic_demo.rs`](src/basic_demo.rs). To switch from a utility to a language lesson, change `main.rs` to call
+`basic_demo::run()` instead of `basic_utils::run()`. Keep one active call at a time so the output stays focused.
+Some examples require arguments, write local files, contact a local service, or deliberately stop the program; see
+the notes below before enabling them.
+
+### Secure CLI store
+
+The active secure store accepts the following commands:
+
+```text
+add       # prompts for a key and a value, then encrypts and saves it
+list      # lists saved records and tries to decrypt them
+get:<key> # retrieves one saved record, for example: get:email
+exit      # closes the program
+```
+
+It creates `rust_cli_secure.db` in the project directory. AES-256-GCM keys and nonces are generated with the
+operating system's cryptographically secure random generator through the `aes-gcm` `getrandom` feature.
+
+> **Learning-project limitation:** a new encryption key is generated for every program run and is not persisted.
+> Records written during one run cannot be decrypted after restarting the application. Do not use this example to
+> store real secrets.
 
 For example, after enabling the iterator-based search lesson, pass a search query and file name after `--`:
 
@@ -88,8 +108,28 @@ Select a utility in [`src/basic_utils.rs`](src/basic_utils.rs).
 
 | Example | Description |
 | --- | --- |
+| [`cli_secure_store.rs`](src/basic_utils/cli_secure_store.rs) | Interactive AES-256-GCM-encrypted key-value store backed by SQLite. The active example. |
 | [`sqlite_crud.rs`](src/basic_utils/sqlite_crud.rs) | Create, read, update, and delete records in an in-memory SQLite database. |
-| [`system_command.rs`](src/basic_utils/system_command.rs) | Runs `df -h /` and prints the available disk-space information. |
+| [`system_command.rs`](src/basic_utils/system_command.rs) | Runs `df -h /` and prints available disk-space information on Unix-like systems. |
+| [`interactive_writer.rs`](src/basic_utils/interactive_writer.rs) | Appends typed lines to `uday_interactive_log.txt` until `exit` is entered. |
+| [`file_read_write.rs`](src/basic_utils/file_read_write.rs) | Appends an audit entry to `uday_audit_log.txt`, then reads and prints it. |
+| [`chatbot_ollama.rs`](src/basic_utils/chatbot_ollama.rs) | Sends prompts to a local Ollama `gemma3:4b` model over its HTTP API. |
+
+### Utility-specific setup and effects
+
+- `interactive_writer` and `file_read_write` create or append to local log files. These files are intentionally
+  retained between runs.
+- `system_command` requires the Unix `df` command and is not portable to Windows without changing the command.
+- `chatbot_ollama` requires [Ollama](https://ollama.com/) to be installed, the server to be running, and the model
+  to be available locally:
+
+  ```bash
+  ollama pull gemma3:4b
+  ollama serve
+  ```
+
+  Enable `chatbot_ollama::run()` in `src/basic_utils.rs`, then start the application with `cargo run`. Type `exit`
+  to close the chat session.
 
 ### Lesson-specific commands
 
@@ -121,8 +161,15 @@ Run these commands before sharing changes:
 cargo fmt --check
 cargo check
 cargo test
+```
+
+You can also run Clippy with:
+
+```bash
 cargo clippy -- -D warnings
 ```
+
+Some intentionally simple learning examples may need to be modernized before the strict Clippy command passes.
 
 Apply Rust formatting with:
 
